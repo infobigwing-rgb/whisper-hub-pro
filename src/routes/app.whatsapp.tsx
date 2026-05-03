@@ -126,7 +126,7 @@ function WhatsappImport() {
         return {
           user_id: user.id, upload_id: upload.id,
           sender: r.sender, sent_at: r.sent_at, original_text: r.text,
-          ai_category: ai?.category ?? "skip", ai_extracted_data: ai ?? null, status: "imported",
+          ai_category: ai?.category ?? "skip", ai_extracted_data: (ai as any) ?? null, status: "imported",
         };
       });
       const { data: msgs, error: mErr } = await supabase.from("whatsapp_messages").insert(msgRows).select("id");
@@ -144,11 +144,11 @@ function WhatsappImport() {
       });
 
       const ops: Promise<any>[] = [];
-      if (tasks.length) ops.push(supabase.from("tasks").insert(tasks));
-      if (notes.length) ops.push(supabase.from("notes").insert(notes));
-      if (events.length) ops.push(supabase.from("calendar_events").insert(events));
-      if (emails.length) ops.push(supabase.from("email_drafts").insert(emails));
-      if (leads.length) ops.push(supabase.from("leads").insert(leads));
+      if (tasks.length) ops.push(Promise.resolve(supabase.from("tasks").insert(tasks)));
+      if (notes.length) ops.push(Promise.resolve(supabase.from("notes").insert(notes)));
+      if (events.length) ops.push(Promise.resolve(supabase.from("calendar_events").insert(events)));
+      if (emails.length) ops.push(Promise.resolve(supabase.from("email_drafts").insert(emails)));
+      if (leads.length) ops.push(Promise.resolve(supabase.from("leads").insert(leads)));
       await Promise.all(ops);
 
       toast.success(`Imported: ${tasks.length} tasks · ${notes.length} notes · ${events.length} events · ${emails.length} emails · ${leads.length} leads`);
