@@ -1,0 +1,7 @@
+project_id = "dmiljuhwuaukpjcejoxz"
+
+[functions.whatsapp-analyze]
+verify_jwt = false
+
+[functions.summarize-note]
+verify_jwt = false
