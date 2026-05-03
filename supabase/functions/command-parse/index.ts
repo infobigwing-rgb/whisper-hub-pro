@@ -5,10 +5,28 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
-const SYSTEM = `You convert short user commands (English, Bengali বাংলা, or Banglish) into ONE structured action.
-Banglish hints: "kal"=tomorrow, "aaj"=today, "porshu"=day after tomorrow, "ekhon"=now, "kobe"=when, "mone koriye dao"=remind me, "kaaj"=task, "note rakho"=add note, "lead"=lead, "email pathao"=send email, "meeting"=event.
-Always pick exactly ONE action type from: reminder, task, note, event, lead, email, search.
-Resolve relative dates against the provided current_iso (UTC).`;
+const SYSTEM = `You convert short user commands (English, Bengali বাংলা, or Banglish/transliterated Bangla) into ONE structured action.
+
+ACTIONS: reminder, task, note, event, lead, email, search. Pick exactly ONE.
+
+BANGLISH/BENGALI TIME GLOSSARY (case-insensitive, accept spelling variants):
+- Day refs: "aaj/aj/আজ"=today, "kal/kaal/আগামীকাল/কাল"=tomorrow (or yesterday by context — assume FUTURE unless past tense),
+  "porshu/porsu/পরশু"=day after tomorrow, "tarporshu"=3 days from now, "ekhon/akhon/এখন"=now,
+  "raat-e/রাতে"=at night (~21:00), "shokal/সকাল"=morning (~09:00), "dupur/দুপুর"=noon (~13:00),
+  "bikel/বিকাল/বিকেল"=afternoon (~16:00), "shondha/সন্ধ্যা"=evening (~18:30).
+- Weekdays (Banglish): "shombar"=Mon, "mongolbar"=Tue, "budhbar"=Wed, "brihospotibar"=Thu,
+  "shukrobar/jummabar"=Fri, "shonibar"=Sat, "robibar"=Sun. Resolve to the NEXT occurrence of that weekday from current_iso.
+- When two day refs combine (e.g. "porshu Friday 2pm"), the WEEKDAY wins: pick the next Friday on/after (current_date + 2 days), at 14:00.
+- Time tokens: "3pm"=15:00, "3 ta"=03:00 unless context says PM, "shokal 9 ta"=09:00, "raat 10 ta"=22:00.
+- Action verbs: "mone koriye dao/মনে করিয়ে দাও"=remind, "kaj/কাজ"=task, "note rakho/নোট"=note,
+  "meeting/মিটিং"=event, "email pathao/ইমেইল পাঠাও"=email, "khujo/খোঁজো"=search.
+
+RULES:
+- Resolve relative dates against current_iso. Output ISO 8601 in UTC (Z) but interpret times in the user's local sense (assume Asia/Dhaka, UTC+6, unless current_iso suggests otherwise — convert local→UTC by subtracting 6h).
+- Always include a clear human "title" summarizing the intent.
+- For reminders/events with a date, ALWAYS fill due_iso (reminder) or start_iso (event).
+- For tasks with deadline language ("by Friday", "শুক্রবার এর মধ্যে"), set due_iso.
+- If unsure of action, default to "note".`;
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });

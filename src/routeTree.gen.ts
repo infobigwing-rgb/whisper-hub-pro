@@ -15,6 +15,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppWhatsappRouteImport } from './routes/app.whatsapp'
 import { Route as AppTasksRouteImport } from './routes/app.tasks'
+import { Route as AppSettingsRouteImport } from './routes/app.settings'
 import { Route as AppRemindersRouteImport } from './routes/app.reminders'
 import { Route as AppNotesRouteImport } from './routes/app.notes'
 import { Route as AppLeadsRouteImport } from './routes/app.leads'
@@ -49,6 +50,11 @@ const AppWhatsappRoute = AppWhatsappRouteImport.update({
 const AppTasksRoute = AppTasksRouteImport.update({
   id: '/tasks',
   path: '/tasks',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => AppRoute,
 } as any)
 const AppRemindersRoute = AppRemindersRouteImport.update({
@@ -86,6 +92,7 @@ export interface FileRoutesByFullPath {
   '/app/leads': typeof AppLeadsRoute
   '/app/notes': typeof AppNotesRoute
   '/app/reminders': typeof AppRemindersRoute
+  '/app/settings': typeof AppSettingsRoute
   '/app/tasks': typeof AppTasksRoute
   '/app/whatsapp': typeof AppWhatsappRoute
   '/app/': typeof AppIndexRoute
@@ -98,6 +105,7 @@ export interface FileRoutesByTo {
   '/app/leads': typeof AppLeadsRoute
   '/app/notes': typeof AppNotesRoute
   '/app/reminders': typeof AppRemindersRoute
+  '/app/settings': typeof AppSettingsRoute
   '/app/tasks': typeof AppTasksRoute
   '/app/whatsapp': typeof AppWhatsappRoute
   '/app': typeof AppIndexRoute
@@ -112,6 +120,7 @@ export interface FileRoutesById {
   '/app/leads': typeof AppLeadsRoute
   '/app/notes': typeof AppNotesRoute
   '/app/reminders': typeof AppRemindersRoute
+  '/app/settings': typeof AppSettingsRoute
   '/app/tasks': typeof AppTasksRoute
   '/app/whatsapp': typeof AppWhatsappRoute
   '/app/': typeof AppIndexRoute
@@ -127,6 +136,7 @@ export interface FileRouteTypes {
     | '/app/leads'
     | '/app/notes'
     | '/app/reminders'
+    | '/app/settings'
     | '/app/tasks'
     | '/app/whatsapp'
     | '/app/'
@@ -139,6 +149,7 @@ export interface FileRouteTypes {
     | '/app/leads'
     | '/app/notes'
     | '/app/reminders'
+    | '/app/settings'
     | '/app/tasks'
     | '/app/whatsapp'
     | '/app'
@@ -152,6 +163,7 @@ export interface FileRouteTypes {
     | '/app/leads'
     | '/app/notes'
     | '/app/reminders'
+    | '/app/settings'
     | '/app/tasks'
     | '/app/whatsapp'
     | '/app/'
@@ -207,6 +219,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppTasksRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/reminders': {
       id: '/app/reminders'
       path: '/reminders'
@@ -251,6 +270,7 @@ interface AppRouteChildren {
   AppLeadsRoute: typeof AppLeadsRoute
   AppNotesRoute: typeof AppNotesRoute
   AppRemindersRoute: typeof AppRemindersRoute
+  AppSettingsRoute: typeof AppSettingsRoute
   AppTasksRoute: typeof AppTasksRoute
   AppWhatsappRoute: typeof AppWhatsappRoute
   AppIndexRoute: typeof AppIndexRoute
@@ -262,6 +282,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppLeadsRoute: AppLeadsRoute,
   AppNotesRoute: AppNotesRoute,
   AppRemindersRoute: AppRemindersRoute,
+  AppSettingsRoute: AppSettingsRoute,
   AppTasksRoute: AppTasksRoute,
   AppWhatsappRoute: AppWhatsappRoute,
   AppIndexRoute: AppIndexRoute,
