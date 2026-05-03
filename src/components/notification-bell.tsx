@@ -23,11 +23,18 @@ export function NotificationBell() {
   // Generate notifications from due reminders / tasks / events on this client (every 60s).
   const scan = async () => {
     if (!user) return;
+    const wantReminders = localStorage.getItem("notify_reminders") !== "0";
+    const wantEvents = localStorage.getItem("notify_events") !== "0";
+    const wantBrowser = localStorage.getItem("notify_browser") !== "0";
     const now = new Date().toISOString();
     const in15 = new Date(Date.now() + 15 * 60_000).toISOString();
     const [rems, evs] = await Promise.all([
-      supabase.from("reminders").select("id,message,due_time").lte("due_time", now).eq("is_done", false),
-      supabase.from("calendar_events").select("id,title,start_time").gte("start_time", now).lte("start_time", in15),
+      wantReminders
+        ? supabase.from("reminders").select("id,message,due_time").lte("due_time", now).eq("is_done", false)
+        : Promise.resolve({ data: [] as any[] }),
+      wantEvents
+        ? supabase.from("calendar_events").select("id,title,start_time").gte("start_time", now).lte("start_time", in15)
+        : Promise.resolve({ data: [] as any[] }),
     ]);
     const seen = new Set(items.map((i) => i.title));
     const toInsert: any[] = [];
@@ -43,7 +50,7 @@ export function NotificationBell() {
       await supabase.from("notifications").insert(toInsert);
       toInsert.forEach((n) => toast(n.title, { description: n.body ?? undefined }));
       // Browser notifications (PWA / installed APK)
-      if (typeof window !== "undefined" && "Notification" in window && Notification.permission === "granted") {
+      if (wantBrowser && typeof window !== "undefined" && "Notification" in window && Notification.permission === "granted") {
         toInsert.forEach((n) => new Notification(n.title, { body: n.body ?? "", icon: "/icon-192.png" }));
       }
       load();
