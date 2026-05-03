@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
-import { Home, Upload, CheckSquare, FileText, Calendar, Bell, Mail, Users, LogOut, Menu } from "lucide-react";
+import { Home, Upload, CheckSquare, FileText, Calendar, Bell, Mail, Users, LogOut, Menu, Settings } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { CommandBar } from "@/components/command-bar";
@@ -17,6 +17,7 @@ const nav = [
   { to: "/app/reminders", label: "Reminders", icon: Bell },
   { to: "/app/emails", label: "Email Drafts", icon: Mail },
   { to: "/app/leads", label: "Leads", icon: Users },
+  { to: "/app/settings", label: "Settings", icon: Settings },
 ] as const;
 
 export function AppShell({ children }: { children: ReactNode }) {
