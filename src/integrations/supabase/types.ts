@@ -14,7 +14,427 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      calendar_events: {
+        Row: {
+          created_at: string
+          description: string | null
+          end_time: string | null
+          id: string
+          lead_id: string | null
+          source_message_id: string | null
+          start_time: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          end_time?: string | null
+          id?: string
+          lead_id?: string | null
+          source_message_id?: string | null
+          start_time: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          end_time?: string | null
+          id?: string
+          lead_id?: string | null
+          source_message_id?: string | null
+          start_time?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "calendar_events_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "calendar_events_source_message_id_fkey"
+            columns: ["source_message_id"]
+            isOneToOne: false
+            referencedRelation: "whatsapp_messages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      email_drafts: {
+        Row: {
+          body_markdown: string | null
+          created_at: string
+          id: string
+          lead_id: string | null
+          source_message_id: string | null
+          subject: string | null
+          to_email: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          body_markdown?: string | null
+          created_at?: string
+          id?: string
+          lead_id?: string | null
+          source_message_id?: string | null
+          subject?: string | null
+          to_email?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          body_markdown?: string | null
+          created_at?: string
+          id?: string
+          lead_id?: string | null
+          source_message_id?: string | null
+          subject?: string | null
+          to_email?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_drafts_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_drafts_source_message_id_fkey"
+            columns: ["source_message_id"]
+            isOneToOne: false
+            referencedRelation: "whatsapp_messages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      lead_activities: {
+        Row: {
+          activity_type: string
+          created_at: string
+          id: string
+          lead_id: string
+          reference_id: string | null
+          summary: string | null
+          user_id: string
+        }
+        Insert: {
+          activity_type: string
+          created_at?: string
+          id?: string
+          lead_id: string
+          reference_id?: string | null
+          summary?: string | null
+          user_id: string
+        }
+        Update: {
+          activity_type?: string
+          created_at?: string
+          id?: string
+          lead_id?: string
+          reference_id?: string | null
+          summary?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lead_activities_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      leads: {
+        Row: {
+          ai_score: number
+          company: string | null
+          created_at: string
+          email: string | null
+          id: string
+          name: string
+          notes: string | null
+          stage: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          ai_score?: number
+          company?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          stage?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          ai_score?: number
+          company?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          stage?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      notes: {
+        Row: {
+          ai_summary: string | null
+          content: string
+          created_at: string
+          id: string
+          lead_id: string | null
+          source_message_id: string | null
+          tags: string[] | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          ai_summary?: string | null
+          content?: string
+          created_at?: string
+          id?: string
+          lead_id?: string | null
+          source_message_id?: string | null
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          ai_summary?: string | null
+          content?: string
+          created_at?: string
+          id?: string
+          lead_id?: string | null
+          source_message_id?: string | null
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notes_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notes_source_message_id_fkey"
+            columns: ["source_message_id"]
+            isOneToOne: false
+            referencedRelation: "whatsapp_messages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      reminders: {
+        Row: {
+          created_at: string
+          due_time: string
+          id: string
+          is_done: boolean
+          message: string
+          recurrence: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          due_time: string
+          id?: string
+          is_done?: boolean
+          message: string
+          recurrence?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          due_time?: string
+          id?: string
+          is_done?: boolean
+          message?: string
+          recurrence?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      tasks: {
+        Row: {
+          assignee: string | null
+          created_at: string
+          description: string | null
+          due_date: string | null
+          id: string
+          labels: string[] | null
+          lead_id: string | null
+          priority: string
+          source_message_id: string | null
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          assignee?: string | null
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          labels?: string[] | null
+          lead_id?: string | null
+          priority?: string
+          source_message_id?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          assignee?: string | null
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          labels?: string[] | null
+          lead_id?: string | null
+          priority?: string
+          source_message_id?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tasks_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_source_message_id_fkey"
+            columns: ["source_message_id"]
+            isOneToOne: false
+            referencedRelation: "whatsapp_messages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      whatsapp_messages: {
+        Row: {
+          ai_category: string | null
+          ai_extracted_data: Json | null
+          created_at: string
+          id: string
+          original_text: string
+          sender: string | null
+          sent_at: string | null
+          status: string
+          upload_id: string | null
+          user_id: string
+        }
+        Insert: {
+          ai_category?: string | null
+          ai_extracted_data?: Json | null
+          created_at?: string
+          id?: string
+          original_text: string
+          sender?: string | null
+          sent_at?: string | null
+          status?: string
+          upload_id?: string | null
+          user_id: string
+        }
+        Update: {
+          ai_category?: string | null
+          ai_extracted_data?: Json | null
+          created_at?: string
+          id?: string
+          original_text?: string
+          sender?: string | null
+          sent_at?: string | null
+          status?: string
+          upload_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "whatsapp_messages_upload_id_fkey"
+            columns: ["upload_id"]
+            isOneToOne: false
+            referencedRelation: "whatsapp_uploads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      whatsapp_uploads: {
+        Row: {
+          created_at: string
+          filename: string
+          id: string
+          message_count: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          filename: string
+          id?: string
+          message_count?: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          filename?: string
+          id?: string
+          message_count?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
