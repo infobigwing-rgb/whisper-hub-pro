@@ -21,6 +21,7 @@ export type Database = {
           end_time: string | null
           id: string
           lead_id: string | null
+          search_text: string | null
           source_message_id: string | null
           start_time: string
           title: string
@@ -32,6 +33,7 @@ export type Database = {
           end_time?: string | null
           id?: string
           lead_id?: string | null
+          search_text?: string | null
           source_message_id?: string | null
           start_time: string
           title: string
@@ -43,6 +45,7 @@ export type Database = {
           end_time?: string | null
           id?: string
           lead_id?: string | null
+          search_text?: string | null
           source_message_id?: string | null
           start_time?: string
           title?: string
@@ -71,6 +74,7 @@ export type Database = {
           created_at: string
           id: string
           lead_id: string | null
+          search_text: string | null
           source_message_id: string | null
           subject: string | null
           to_email: string | null
@@ -82,6 +86,7 @@ export type Database = {
           created_at?: string
           id?: string
           lead_id?: string | null
+          search_text?: string | null
           source_message_id?: string | null
           subject?: string | null
           to_email?: string | null
@@ -93,6 +98,7 @@ export type Database = {
           created_at?: string
           id?: string
           lead_id?: string | null
+          search_text?: string | null
           source_message_id?: string | null
           subject?: string | null
           to_email?: string | null
@@ -163,6 +169,7 @@ export type Database = {
           id: string
           name: string
           notes: string | null
+          search_text: string | null
           stage: string
           updated_at: string
           user_id: string
@@ -175,6 +182,7 @@ export type Database = {
           id?: string
           name: string
           notes?: string | null
+          search_text?: string | null
           stage?: string
           updated_at?: string
           user_id: string
@@ -187,6 +195,7 @@ export type Database = {
           id?: string
           name?: string
           notes?: string | null
+          search_text?: string | null
           stage?: string
           updated_at?: string
           user_id?: string
@@ -200,6 +209,7 @@ export type Database = {
           created_at: string
           id: string
           lead_id: string | null
+          search_text: string | null
           source_message_id: string | null
           tags: string[] | null
           title: string
@@ -212,6 +222,7 @@ export type Database = {
           created_at?: string
           id?: string
           lead_id?: string | null
+          search_text?: string | null
           source_message_id?: string | null
           tags?: string[] | null
           title?: string
@@ -224,6 +235,7 @@ export type Database = {
           created_at?: string
           id?: string
           lead_id?: string | null
+          search_text?: string | null
           source_message_id?: string | null
           tags?: string[] | null
           title?: string
@@ -246,6 +258,36 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          is_read: boolean
+          link: string | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          link?: string | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          link?: string | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       profiles: {
         Row: {
@@ -311,6 +353,7 @@ export type Database = {
           labels: string[] | null
           lead_id: string | null
           priority: string
+          search_text: string | null
           source_message_id: string | null
           status: string
           title: string
@@ -326,6 +369,7 @@ export type Database = {
           labels?: string[] | null
           lead_id?: string | null
           priority?: string
+          search_text?: string | null
           source_message_id?: string | null
           status?: string
           title: string
@@ -341,6 +385,7 @@ export type Database = {
           labels?: string[] | null
           lead_id?: string | null
           priority?: string
+          search_text?: string | null
           source_message_id?: string | null
           status?: string
           title?: string
@@ -371,6 +416,7 @@ export type Database = {
           created_at: string
           id: string
           original_text: string
+          search_text: string | null
           sender: string | null
           sent_at: string | null
           status: string
@@ -383,6 +429,7 @@ export type Database = {
           created_at?: string
           id?: string
           original_text: string
+          search_text?: string | null
           sender?: string | null
           sent_at?: string | null
           status?: string
@@ -395,6 +442,7 @@ export type Database = {
           created_at?: string
           id?: string
           original_text?: string
+          search_text?: string | null
           sender?: string | null
           sent_at?: string | null
           status?: string
@@ -440,7 +488,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      normalize_bn_search: { Args: { t: string }; Returns: string }
     }
     Enums: {
       [_ in never]: never
