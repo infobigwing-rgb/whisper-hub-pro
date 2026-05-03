@@ -4,6 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Home, Upload, CheckSquare, FileText, Calendar, Bell, Mail, Users, LogOut, Menu } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { CommandBar } from "@/components/command-bar";
+import { GlobalSearch } from "@/components/global-search";
+import { NotificationBell } from "@/components/notification-bell";
 
 const nav = [
   { to: "/app", label: "Dashboard", icon: Home },
@@ -21,6 +24,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const location = useLocation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [searchSignal, setSearchSignal] = useState({ q: "", n: 0 });
 
   const Sidebar = (
     <aside className="flex h-full w-64 flex-col border-r border-sidebar-border bg-sidebar">
@@ -70,9 +74,14 @@ export function AppShell({ children }: { children: ReactNode }) {
         </div>
       )}
       <div className="flex flex-1 flex-col overflow-hidden">
-        <header className="flex h-14 items-center gap-2 border-b border-border bg-background/80 px-4 backdrop-blur md:hidden">
-          <Button variant="ghost" size="icon" onClick={() => setOpen(true)}><Menu className="h-5 w-5" /></Button>
-          <span className="font-semibold">ChatFlow</span>
+        <header className="flex h-14 items-center gap-2 border-b border-border bg-background/80 px-4 backdrop-blur">
+          <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setOpen(true)}><Menu className="h-5 w-5" /></Button>
+          <span className="font-semibold md:hidden">ChatFlow</span>
+          <div className="ml-auto flex items-center gap-2">
+            <CommandBar onOpenSearch={(q) => setSearchSignal({ q, n: Date.now() })} />
+            <GlobalSearch openSignal={searchSignal} />
+            <NotificationBell />
+          </div>
         </header>
         <main className="flex-1 overflow-y-auto">{children}</main>
       </div>
