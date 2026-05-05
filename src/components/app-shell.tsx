@@ -64,8 +64,9 @@ export function AppShell({ children }: { children: ReactNode }) {
           );
         })}
       </nav>
-      <div className="border-t border-sidebar-border p-3">
-        <div className="mb-2 px-2 text-xs text-muted-foreground truncate">{user?.email}</div>
+      <div className="space-y-2 border-t border-sidebar-border p-3">
+        <UserGuide />
+        <div className="px-2 text-xs text-muted-foreground truncate">{user?.email}</div>
         <Button variant="ghost" size="sm" className="w-full justify-start" onClick={async () => { await signOut(); navigate({ to: "/auth" }); }}>
           <LogOut className="mr-2 h-4 w-4" /> Sign out
         </Button>
