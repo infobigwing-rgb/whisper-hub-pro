@@ -45,23 +45,21 @@ function SalesAutomation() {
     loadData();
   }, [user]);
 
+  const sb = supabase as any;
+
   const loadData = async () => {
     try {
-      // Load email sequences
-      const { data: seqs } = await supabase
+      const { data: seqs } = await sb
         .from("email_sequences")
         .select("id, name, description, is_active, trigger_type")
         .eq("user_id", user!.id);
+      setSequences((seqs as EmailSequence[]) || []);
 
-      setSequences(seqs || []);
-
-      // Load automation rules
-      const { data: rls } = await supabase
+      const { data: rls } = await sb
         .from("automation_rules")
         .select("id, name, description, is_active")
         .eq("user_id", user!.id);
-
-      setRules(rls || []);
+      setRules((rls as AutomationRule[]) || []);
     } catch (error) {
       console.error("Error loading data:", error);
     } finally {
@@ -71,49 +69,39 @@ function SalesAutomation() {
 
   const createSequence = async () => {
     if (!newSequence.name) return;
-
     try {
-      const { error } = await supabase.from("email_sequences").insert({
+      const { error } = await sb.from("email_sequences").insert({
         user_id: user!.id,
         ...newSequence,
       });
-
       if (!error) {
         setNewSequence({ name: "", description: "", trigger_type: "new_lead" });
         loadData();
       }
-    } catch (error) {
-      console.error("Error creating sequence:", error);
-    }
+    } catch (error) { console.error(error); }
   };
 
   const createRule = async () => {
     if (!newRule.name) return;
-
     try {
-      const { error } = await supabase.from("automation_rules").insert({
+      const { error } = await sb.from("automation_rules").insert({
         user_id: user!.id,
         ...newRule,
         trigger: JSON.stringify({}),
         actions: JSON.stringify([]),
       });
-
       if (!error) {
         setNewRule({ name: "", description: "" });
         loadData();
       }
-    } catch (error) {
-      console.error("Error creating rule:", error);
-    }
+    } catch (error) { console.error(error); }
   };
 
   const toggleSequence = async (id: string, current: boolean) => {
     try {
-      await supabase.from("email_sequences").update({ is_active: !current }).eq("id", id);
+      await sb.from("email_sequences").update({ is_active: !current }).eq("id", id);
       loadData();
-    } catch (error) {
-      console.error("Error toggling sequence:", error);
-    }
+    } catch (error) { console.error(error); }
   };
 
   if (loading) {
