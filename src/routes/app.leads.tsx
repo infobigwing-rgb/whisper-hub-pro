@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2, UserCheck } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/app/leads")({
@@ -52,6 +52,17 @@ function Leads() {
   const del = async (id: string) => {
     setLeads((p) => p.filter((l) => l.id !== id));
     await supabase.from("leads").delete().eq("id", id);
+  };
+  const convert = async (l: Lead) => {
+    if (!user) return;
+    const sb = supabase as any;
+    const { data: existing } = await sb.from("customers").select("id").eq("lead_id", l.id).maybeSingle();
+    if (existing) { toast.success("Customer already exists"); return; }
+    const { error } = await sb.from("customers").insert({
+      user_id: user.id, lead_id: l.id, name: l.name, email: l.email, company: l.company, notes: l.notes,
+    });
+    if (error) { toast.error(error.message); return; }
+    toast.success(`${l.name} converted to customer`);
   };
 
   const scoreColor = (s: number) => s >= 75 ? "bg-success/15 text-success border-success/30" : s >= 40 ? "bg-warning/15 text-warning border-warning/30" : "bg-muted text-muted-foreground";

@@ -18,9 +18,14 @@ import { Route as AppTasksRouteImport } from './routes/app.tasks'
 import { Route as AppSettingsRouteImport } from './routes/app.settings'
 import { Route as AppSalesRouteImport } from './routes/app.sales'
 import { Route as AppRemindersRouteImport } from './routes/app.reminders'
+import { Route as AppProfileRouteImport } from './routes/app.profile'
+import { Route as AppProductsRouteImport } from './routes/app.products'
+import { Route as AppOnboardingRouteImport } from './routes/app.onboarding'
 import { Route as AppNotesRouteImport } from './routes/app.notes'
 import { Route as AppLeadsRouteImport } from './routes/app.leads'
 import { Route as AppEmailsRouteImport } from './routes/app.emails'
+import { Route as AppDealsRouteImport } from './routes/app.deals'
+import { Route as AppCustomersRouteImport } from './routes/app.customers'
 import { Route as AppCrmRouteImport } from './routes/app.crm'
 import { Route as AppCalendarRouteImport } from './routes/app.calendar'
 
@@ -69,6 +74,21 @@ const AppRemindersRoute = AppRemindersRouteImport.update({
   path: '/reminders',
   getParentRoute: () => AppRoute,
 } as any)
+const AppProfileRoute = AppProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppProductsRoute = AppProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppOnboardingRoute = AppOnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppNotesRoute = AppNotesRouteImport.update({
   id: '/notes',
   path: '/notes',
@@ -82,6 +102,16 @@ const AppLeadsRoute = AppLeadsRouteImport.update({
 const AppEmailsRoute = AppEmailsRouteImport.update({
   id: '/emails',
   path: '/emails',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDealsRoute = AppDealsRouteImport.update({
+  id: '/deals',
+  path: '/deals',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCustomersRoute = AppCustomersRouteImport.update({
+  id: '/customers',
+  path: '/customers',
   getParentRoute: () => AppRoute,
 } as any)
 const AppCrmRoute = AppCrmRouteImport.update({
@@ -101,9 +131,14 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/app/calendar': typeof AppCalendarRoute
   '/app/crm': typeof AppCrmRoute
+  '/app/customers': typeof AppCustomersRoute
+  '/app/deals': typeof AppDealsRoute
   '/app/emails': typeof AppEmailsRoute
   '/app/leads': typeof AppLeadsRoute
   '/app/notes': typeof AppNotesRoute
+  '/app/onboarding': typeof AppOnboardingRoute
+  '/app/products': typeof AppProductsRoute
+  '/app/profile': typeof AppProfileRoute
   '/app/reminders': typeof AppRemindersRoute
   '/app/sales': typeof AppSalesRoute
   '/app/settings': typeof AppSettingsRoute
@@ -116,9 +151,14 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/app/calendar': typeof AppCalendarRoute
   '/app/crm': typeof AppCrmRoute
+  '/app/customers': typeof AppCustomersRoute
+  '/app/deals': typeof AppDealsRoute
   '/app/emails': typeof AppEmailsRoute
   '/app/leads': typeof AppLeadsRoute
   '/app/notes': typeof AppNotesRoute
+  '/app/onboarding': typeof AppOnboardingRoute
+  '/app/products': typeof AppProductsRoute
+  '/app/profile': typeof AppProfileRoute
   '/app/reminders': typeof AppRemindersRoute
   '/app/sales': typeof AppSalesRoute
   '/app/settings': typeof AppSettingsRoute
@@ -133,9 +173,14 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/app/calendar': typeof AppCalendarRoute
   '/app/crm': typeof AppCrmRoute
+  '/app/customers': typeof AppCustomersRoute
+  '/app/deals': typeof AppDealsRoute
   '/app/emails': typeof AppEmailsRoute
   '/app/leads': typeof AppLeadsRoute
   '/app/notes': typeof AppNotesRoute
+  '/app/onboarding': typeof AppOnboardingRoute
+  '/app/products': typeof AppProductsRoute
+  '/app/profile': typeof AppProfileRoute
   '/app/reminders': typeof AppRemindersRoute
   '/app/sales': typeof AppSalesRoute
   '/app/settings': typeof AppSettingsRoute
@@ -151,9 +196,14 @@ export interface FileRouteTypes {
     | '/auth'
     | '/app/calendar'
     | '/app/crm'
+    | '/app/customers'
+    | '/app/deals'
     | '/app/emails'
     | '/app/leads'
     | '/app/notes'
+    | '/app/onboarding'
+    | '/app/products'
+    | '/app/profile'
     | '/app/reminders'
     | '/app/sales'
     | '/app/settings'
@@ -166,9 +216,14 @@ export interface FileRouteTypes {
     | '/auth'
     | '/app/calendar'
     | '/app/crm'
+    | '/app/customers'
+    | '/app/deals'
     | '/app/emails'
     | '/app/leads'
     | '/app/notes'
+    | '/app/onboarding'
+    | '/app/products'
+    | '/app/profile'
     | '/app/reminders'
     | '/app/sales'
     | '/app/settings'
@@ -182,9 +237,14 @@ export interface FileRouteTypes {
     | '/auth'
     | '/app/calendar'
     | '/app/crm'
+    | '/app/customers'
+    | '/app/deals'
     | '/app/emails'
     | '/app/leads'
     | '/app/notes'
+    | '/app/onboarding'
+    | '/app/products'
+    | '/app/profile'
     | '/app/reminders'
     | '/app/sales'
     | '/app/settings'
@@ -264,6 +324,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppRemindersRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/profile': {
+      id: '/app/profile'
+      path: '/profile'
+      fullPath: '/app/profile'
+      preLoaderRoute: typeof AppProfileRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/products': {
+      id: '/app/products'
+      path: '/products'
+      fullPath: '/app/products'
+      preLoaderRoute: typeof AppProductsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/onboarding': {
+      id: '/app/onboarding'
+      path: '/onboarding'
+      fullPath: '/app/onboarding'
+      preLoaderRoute: typeof AppOnboardingRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/notes': {
       id: '/app/notes'
       path: '/notes'
@@ -283,6 +364,20 @@ declare module '@tanstack/react-router' {
       path: '/emails'
       fullPath: '/app/emails'
       preLoaderRoute: typeof AppEmailsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/deals': {
+      id: '/app/deals'
+      path: '/deals'
+      fullPath: '/app/deals'
+      preLoaderRoute: typeof AppDealsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/customers': {
+      id: '/app/customers'
+      path: '/customers'
+      fullPath: '/app/customers'
+      preLoaderRoute: typeof AppCustomersRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/crm': {
@@ -305,9 +400,14 @@ declare module '@tanstack/react-router' {
 interface AppRouteChildren {
   AppCalendarRoute: typeof AppCalendarRoute
   AppCrmRoute: typeof AppCrmRoute
+  AppCustomersRoute: typeof AppCustomersRoute
+  AppDealsRoute: typeof AppDealsRoute
   AppEmailsRoute: typeof AppEmailsRoute
   AppLeadsRoute: typeof AppLeadsRoute
   AppNotesRoute: typeof AppNotesRoute
+  AppOnboardingRoute: typeof AppOnboardingRoute
+  AppProductsRoute: typeof AppProductsRoute
+  AppProfileRoute: typeof AppProfileRoute
   AppRemindersRoute: typeof AppRemindersRoute
   AppSalesRoute: typeof AppSalesRoute
   AppSettingsRoute: typeof AppSettingsRoute
@@ -319,9 +419,14 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppCalendarRoute: AppCalendarRoute,
   AppCrmRoute: AppCrmRoute,
+  AppCustomersRoute: AppCustomersRoute,
+  AppDealsRoute: AppDealsRoute,
   AppEmailsRoute: AppEmailsRoute,
   AppLeadsRoute: AppLeadsRoute,
   AppNotesRoute: AppNotesRoute,
+  AppOnboardingRoute: AppOnboardingRoute,
+  AppProductsRoute: AppProductsRoute,
+  AppProfileRoute: AppProfileRoute,
   AppRemindersRoute: AppRemindersRoute,
   AppSalesRoute: AppSalesRoute,
   AppSettingsRoute: AppSettingsRoute,
