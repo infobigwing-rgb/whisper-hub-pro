@@ -1,24 +1,30 @@
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
-import { Home, Upload, CheckSquare, FileText, Calendar, Bell, Mail, Users, LogOut, Menu, Settings, TrendingUp, Zap } from "lucide-react";
+import { Home, Upload, CheckSquare, FileText, Calendar, Bell, Mail, Users, LogOut, Menu, Settings, TrendingUp, Zap, DollarSign, UserCircle, Briefcase, Package, Rocket } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { CommandBar } from "@/components/command-bar";
 import { GlobalSearch } from "@/components/global-search";
 import { NotificationBell } from "@/components/notification-bell";
+import { UserGuide } from "@/components/user-guide";
 
 const nav = [
   { to: "/app", label: "Dashboard", icon: Home },
-  { to: "/app/whatsapp", label: "WhatsApp Import", icon: Upload },
+  { to: "/app/leads", label: "Leads", icon: Users },
+  { to: "/app/deals", label: "Deals", icon: DollarSign },
+  { to: "/app/customers", label: "Customers", icon: UserCircle },
+  { to: "/app/onboarding", label: "Onboarding", icon: Rocket },
+  { to: "/app/products", label: "Products", icon: Package },
   { to: "/app/tasks", label: "Tasks", icon: CheckSquare },
   { to: "/app/notes", label: "Notes", icon: FileText },
   { to: "/app/calendar", label: "Calendar", icon: Calendar },
   { to: "/app/reminders", label: "Reminders", icon: Bell },
   { to: "/app/emails", label: "Email Drafts", icon: Mail },
-  { to: "/app/leads", label: "Leads", icon: Users },
+  { to: "/app/whatsapp", label: "WhatsApp Import", icon: Upload },
   { to: "/app/crm", label: "CRM Dashboard", icon: TrendingUp },
   { to: "/app/sales", label: "Sales Automation", icon: Zap },
+  { to: "/app/profile", label: "Profile", icon: Briefcase },
   { to: "/app/settings", label: "Settings", icon: Settings },
 ] as const;
 
