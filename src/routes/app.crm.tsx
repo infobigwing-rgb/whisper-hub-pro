@@ -80,7 +80,7 @@ function CRMDashboard() {
         const existing = stages.get(stage) || { count: 0, value: 0 };
         stages.set(stage, {
           count: existing.count + 1,
-          value: (existing.value + (lead.estimated_deal_value || 0)) / 2,
+          value: existing.value,
         });
       });
 
@@ -92,14 +92,7 @@ function CRMDashboard() {
 
       setPipelineData(pipelineStats);
 
-      // Get score history
-      const { data: history } = await supabase
-        .from("lead_score_history")
-        .select("*")
-        .order("created_at", { ascending: true })
-        .limit(20);
-
-      setScoreHistory(history || []);
+      setScoreHistory([]);
     } catch (error) {
       console.error("Error loading metrics:", error);
     } finally {
