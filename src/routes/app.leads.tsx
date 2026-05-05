@@ -111,7 +111,10 @@ function Leads() {
                         <div className="truncate text-sm font-medium">{l.name}</div>
                         {l.company && <div className="truncate text-xs text-muted-foreground">{l.company}</div>}
                       </div>
-                      <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => del(l.id)}><Trash2 className="h-3 w-3" /></Button>
+                      <div className="flex flex-col gap-1">
+                        <Button variant="ghost" size="icon" className="h-6 w-6" title="Convert to customer" onClick={() => convert(l)}><UserCheck className="h-3 w-3" /></Button>
+                        <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => del(l.id)}><Trash2 className="h-3 w-3" /></Button>
+                      </div>
                     </div>
                     <Badge variant="outline" className={`mt-2 ${scoreColor(l.ai_score)}`}>Score {l.ai_score}</Badge>
                   </Card>
